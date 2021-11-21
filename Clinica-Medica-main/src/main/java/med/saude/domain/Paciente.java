@@ -13,9 +13,9 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name = "PACIENTE")
 public class Paciente extends AbstractEntity<Long> {
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = false)
 	private String nome;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = false)
 	private String sobreNome;
 	@Column(nullable = false, length = 14)
 	private String cpf;

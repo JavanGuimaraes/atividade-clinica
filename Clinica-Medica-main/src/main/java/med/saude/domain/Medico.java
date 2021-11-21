@@ -1,7 +1,6 @@
 package med.saude.domain;
 
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
