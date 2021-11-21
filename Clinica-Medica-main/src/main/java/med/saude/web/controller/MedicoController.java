@@ -19,7 +19,7 @@ public class MedicoController {
 	private MedicoService medicoService;
 
 	@GetMapping("/cadastrar")
-	public String cadastrar() {
+	public String cadastrar(Medico medico) {
 		return "/medico/cadastro";
 	}
 	
@@ -50,7 +50,6 @@ public class MedicoController {
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, ModelMap model) {
 		medicoService.excluir(id);
-		return listar(model);
-		 
+		return listar(model);	 
 	}
 }
