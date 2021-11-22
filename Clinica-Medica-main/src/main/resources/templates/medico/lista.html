@@ -28,6 +28,7 @@
 							<th>#</th>
 							<th>Nome</th>
 							<th>CRM</th>
+							<th>Especialidade</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,6 +36,7 @@
 							<td th:text="${p.id}">1</td>
 							<td th:text="${p.nome}">Robert</td>
 							<td th:text="${p.crm}">0000000000</td>
+							<td th:text="${p.especialidade.titulo}">especialidade</td>
 							
 							<td colspan="2"><a class="btn btn-info btn-sm"
 								th:href="@{/medicos/editar/{id} (id=${p.id})}" role="button">

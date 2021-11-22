@@ -1,21 +1,28 @@
 package med.saude.domain;
 
 import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "AGENDAMENTO")
 public class Agendamento extends AbstractEntity<Long> {
 
+	@Column
 	private String nome;
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataConsulta;
 	
 	@ManyToOne
-	@JoinColumn(name = "paciente_id_fk")
+	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
 	
 	@ManyToOne
@@ -56,6 +63,14 @@ public class Agendamento extends AbstractEntity<Long> {
 
 	public void setMedicos(Medico medicos) {
 		this.medicos = medicos;
+	}
+	
+	public Paciente getPacientes() {
+		return paciente;
+	}
+
+	public void setPacientes(Paciente pacientes) {
+		this.paciente = pacientes;
 	}
 
 }
