@@ -44,14 +44,13 @@
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="cargo">Especialidade</label> <select
-							id="especialidade" class="form-control" name="cargo">
-							<option value="">Selecione...</option>
-							<option value="1">Clínico Geral</option>
-							<option value="2">Urologista</option>
-							<option value="3">Cardiologista</option>
-							<option value="4">Neurologista</option>
-							<option value="5">Obstetra</option>
+						<label for="especialidade">Especialidade</label> <select
+							th:field = "*{especialidade}">
+							<option 
+							    th:each = "l:${especialidade}"
+                                th:value = "${l.id}"
+                                th:text = "${l.titulo}"
+							/>
 						</select>
 						<div class="invalid-feedback"></div>
 					</div>

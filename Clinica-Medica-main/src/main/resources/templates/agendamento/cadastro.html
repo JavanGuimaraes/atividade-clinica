@@ -3,6 +3,8 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
+<head>
+</head>	
 <body>
 	<section class="layout-content" layout:fragment="corpo">
 		<div class="page-header">
@@ -13,7 +15,7 @@
 							<span>Cadastrar Agendamento</span></li>
 					</ul>
 				</div>
-				<a class="btn btn-primary btn-md" href="/agendamentos/listar"
+				<a class="btn btn-primary btn-md" th:href="@{/agendamentos/listar}"
 					role="button"> <span class="oi oi-spreadsheet" title="Cadastro"
 					aria-hidden="true"></span> <span>Listar Agendamentos</span>
 				</a>
@@ -21,35 +23,32 @@
 		</div>
 
 		<div class="container" id="cadastro">
-			<form action="/agendamentos/salvar" method="POST">
+			<form th:action="${agendamento.id == null} ? @{/agendamentos/salvar} : @{/agendamentos/editar}"
+				th:object="${agendamento}" method="POST">>
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="nome">Nome: </label> <input type="text"
-							class="form-control" id="nome" placeholder="Digite o nome"
-							autofocus="autofocus" name="nome" value="" />
+							class="form-control" id="nome" placeholder="Digite o nome da consulta"
+							autofocus="autofocus" name="nome" th:field="*{nome}" />
 						<div class="invalid-feedback"></div>
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="dataEntrada">Data de Consulta</label> <input
+						<label for="dataConsulta">Data de Consulta</label> <input
 							type="date" class="form-control" id="dataConsulta"
-							name="dataEntrada" value="" />
+							name="dataConsulta" th:field="*{dataConsulta}" />
 						<div class="invalid-feedback"></div>
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="cargo">Paciente</label> <select id="paciente"
-							class="form-control" name="cargo">
-							<option value="">Selecione...</option>
-							<option value="1">Maria da Silva</option>
-							<option value="2">Auxiliadora Torres</option>
-							<option value="3">Carlos Antônio</option>
-							<option value="4">Adriano Valetim</option>
-							<option value="5">Paulo Ferraz</option>
+						<label for="cargo">Paciente</label> <select 
+							class="form-control" th:field="*{pacientes}">
+							<option th:each="p:${pacientes}"
+								th:value="${p.id}" th:text="${p.nome}" />
 						</select>
 						<div class="invalid-feedback"></div>
 					</div>
@@ -58,13 +57,9 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="cargo">Especialidade</label> <select
-							id="especialidade" class="form-control" name="cargo">
-							<option value="">Selecione...</option>
-							<option value="1">Clínico Geral</option>
-							<option value="2">Urologista</option>
-							<option value="3">Cardiologista</option>
-							<option value="4">Neurologista</option>
-							<option value="5">Obstetra</option>
+							class="form-control" th:field="*{especialidades}">
+							<option th:each="esp:${especialidades}"
+								th:value="${esp.id}" th:text="${esp.titulo}" />
 						</select>
 						<div class="invalid-feedback"></div>
 					</div>
@@ -72,20 +67,17 @@
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="cargo">Médico</label> <select id="medico"
-							class="form-control" name="cargo">
+						<label for="cargo">Médico</label> <select 
+							class="form-control" th:field="*{medicos}">
 							<option value="">Selecione...</option>
-							<option value="1">Roberval Ferraz</option>
-							<option value="2">Amauri Lima</option>
-							<option value="3">Carlos Figueira</option>
-							<option value="4">Adriano Carlos</option>
-							<option value="5">Robert London</option>
+							<option th:each="med:${medicos}" 
+							th:value="${med.id}" th:text="${med.nome}" />
 						</select>
 						<div class="invalid-feedback"></div>
 					</div>
 				</div>
 
-				<input type="hidden" id="id" name="id" value="" />
+				<input type="hidden" id="id" name="id" th:field="*{id}" />
 				<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 			</form>
 		</div>
