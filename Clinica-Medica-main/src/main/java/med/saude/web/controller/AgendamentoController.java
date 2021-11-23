@@ -55,14 +55,14 @@ public class AgendamentoController {
 	
 	@PostMapping("/salvar")
     public String salvar(@ModelAttribute Agendamento agendamento,  BindingResult bires) {
-        Medico medical = new Medico();
-        Especialidade especiality = new Especialidade();
+        Medico medico = new Medico();
+        Especialidade especialidade = new Especialidade();
         Paciente paciente = new Paciente();
-        medical.setId( Long.valueOf(bires.getFieldValue("medicos").toString()));
-        especiality.setId( Long.valueOf(bires.getFieldValue("especialidades").toString()));
+        medico.setId( Long.valueOf(bires.getFieldValue("medicos").toString()));
+        especialidade.setId( Long.valueOf(bires.getFieldValue("especialidades").toString()));
         paciente.setId( Long.valueOf(bires.getFieldValue("pacientes").toString()));
-        agendamento.setMedicos(medical);
-        agendamento.setEspecialidades(especiality);
+        agendamento.setMedicos(medico);
+        agendamento.setEspecialidades(especialidade);
         agendamento.setPacientes(paciente);
         agendamentoService.salvar(agendamento);
         return "redirect:/agendamentos/cadastrar";
@@ -70,12 +70,27 @@ public class AgendamentoController {
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+        List<Medico> medico = medicoService.buscarTodos();
+        List<Paciente> paciente = pacienteService.buscarTodos();
+        List<Especialidade> especialidade = especialidadeService.buscarTodos();    
+        model.addAttribute("medicos", medico);
+        model.addAttribute("especialidades", especialidade); 
+        model.addAttribute("pacientes", paciente);
 		model.addAttribute("agendamento", agendamentoService.buscarPorId(id));
 		return "/agendamento/cadastro";
 	}
 	
 	@PostMapping("/editar")
-	public String editar(Agendamento agendamento) {
+	public String editar(Agendamento agendamento, BindingResult bires) {
+		Medico medico = new Medico();
+        Especialidade especialidade = new Especialidade();
+        Paciente paciente = new Paciente();
+        medico.setId( Long.valueOf(bires.getFieldValue("medicos").toString()));
+        especialidade.setId( Long.valueOf(bires.getFieldValue("especialidades").toString()));
+        paciente.setId( Long.valueOf(bires.getFieldValue("pacientes").toString()));
+        agendamento.setMedicos(medico);
+        agendamento.setEspecialidades(especialidade);
+        agendamento.setPacientes(paciente);
 		agendamentoService.editar(agendamento);
 		return "redirect:/agendamentos/listar";
 	}
